@@ -1,0 +1,10 @@
+quantity=//*[@id="wb-auto-4_info"] ([2])
+
+
+//*[@id="wb-auto-4"]/tbody/tr[1]/td[5]
+
+//*[@id="wb-auto-4"]/tbody/tr[3]/td[5]
+
+home=/html/body/main/div[3]/div/div/div[2]/div/ol/li[2]/a
+page=/html/body/main/div[3]/div/div/div[2]/div/ol/li[3]/a
+page2=/html/body/main/div[3]/div/div/div[2]/div/ol/li[4]/a

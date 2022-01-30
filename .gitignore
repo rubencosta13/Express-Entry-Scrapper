@@ -1,0 +1,4 @@
+.prettierrc
+node_modules
+example.png
+package-lock.json
