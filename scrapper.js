@@ -30,7 +30,16 @@ const accessScore = async (page) => {
 };
 
 const extractPageData = async (url) => {
-  const browser = await puppeteer.launch({ headless: false, slowMo: 250 });
+  const browserConfigs = {
+    headless: true,
+    args: [
+        "--disable-gpu",
+        "--disable-dev-shm-usage",
+        "--disable-setuid-sandbox",
+        "--no-sandbox",
+    ]
+  }
+  const browser = await puppeteer.launch(browserConfigs);
   const page = await browser.newPage();
   await page.goto(url);
   await accessScore(page);
