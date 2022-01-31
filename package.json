@@ -2,19 +2,20 @@
   "name": "scrapper",
   "version": "1.0.0",
   "main": "scrapper.js",
+  "bugs": {
+    "url" : "https://github.com/rubencosta13/project/issues",
+    "email" : "rubenlavoscosta@gmail.com"
+  },
   "type": "module",
   "scripts": {
-    "start": "node scrapper.js"
+    "start": "node --experimental-json-modules scrapper.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "client-zip": "^2.0.0",
     "exceljs": "^4.3.0",
-    "file-saver": "^2.0.5",
-    "moment": "^2.29.1",
     "puppeteer": "^13.1.2"
   }
 }
