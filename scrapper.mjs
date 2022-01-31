@@ -1,8 +1,9 @@
 import puppeteer from "puppeteer"
 import fs from "fs"
+import {writeDataToFile} from './modules/excel.mjs'
+import config from "./settings.json" assert {type: "json"};
+
 const url ="https://www.canada.ca/en/immigration-refugees-citizenship/corporate/mandate/policies-operational-instructions-agreements/ministerial-instructions/express-entry-rounds.html#wb-auto-4";
-import {writeDataToFile} from './modules/excel.js'
-import config from "./settings.json"
 const dataArray = []
 const dateArray = []
 

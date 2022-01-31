@@ -3,12 +3,12 @@
   "version": "1.0.0",
   "main": "scrapper.js",
   "bugs": {
-    "url" : "https://github.com/rubencosta13/project/issues",
-    "email" : "rubenlavoscosta@gmail.com"
+    "url": "https://github.com/rubencosta13/project/issues",
+    "email": "rubenlavoscosta@gmail.com"
   },
-  "type": "module",
   "scripts": {
-    "start": "node --experimental-json-modules scrapper.js"
+    "start": "node --experimental-json-modules scrapper.mjs",
+    "test": "jest"
   },
   "keywords": [],
   "author": "",
@@ -17,5 +17,9 @@
   "dependencies": {
     "exceljs": "^4.3.0",
     "puppeteer": "^13.1.2"
+  },
+  "devDependencies": {
+    "jest": "^27.4.7",
+    "jest-puppeteer": "^6.0.3"
   }
 }
