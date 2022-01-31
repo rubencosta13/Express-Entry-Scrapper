@@ -1,4 +1,4 @@
-# <center>Express Entry CRS Scrapper</center>
+<h1 align="center">Express Entry CRS Scrapper</p>
 <center>
 <p align="center">
     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" width="40" height="40"/>
@@ -6,16 +6,17 @@
 </p>
 </center>
 
-- [Temporary File Cleaner](#-Temporary-file-cleaner)
+# Table of Contents
+- [Temporary File Cleaner](https://github.com/rubencosta13/Express-Entry-Scrapper)
     - [Project Explanation](#about-this-project)
-    - [Project Status](#[project-status)
-    - [Configurations](#configurations)
-    - [Technologies](#technologies)
-    - [Help](#sos-help)
+    - [Project Status](#project-status)
+    - [Configurations](#how-to-set-up-this-utility)
+    - [Technologies](#technologies-used)
+    - [Help](#help)
 
 
 ---
-# <center> About This Project </center>
+# About This Project
 A simple understanding of this project:
 <br />
 I was looking for a way to extract data from a particular [page](https://www.canada.ca/en/immigration-refugees-citizenship/corporate/mandate/policies-operational-instructions-agreements/ministerial-instructions/express-entry-rounds.html#wb-auto-4), Canada's 🍁 Express Entry Draws.
@@ -25,13 +26,13 @@ So I came up with this solution **A simple WebScrapper**, which allow us to:
 - Export data to a .txt file as well as CSV file or Excel
 - Save time, retrieving data from the website
 
-# <center> Project Status </center>
+# Project Status
 Todo: <br />
 
     Add Docker and Start the Chromium window as Headless
 
 
-# <center> How to Set Up this utility </center>
+# How to Set Up this utility
 1. Head up to settings.json, this should be the output of the file
 ```json
 {
@@ -51,12 +52,12 @@ $ npm start   # This starts the scrapper
     Using npm start is going to start scrapping the webpage, a chromium window should pop up, in newer versions the process will be totally headless
 
 
-# <center> Technologies Used </center>
+# Technologies Used
 - [ExcelJs](https://github.com/exceljs/exceljs) 
 - [Puppetteer](https://github.com/puppeteer/puppeteer)
 - [Docker](https://www.docker.com/) [Coming soon in the next versions]
 
-# <center> Help </center>
+# Help
 
 If you need any help send me an [email](mailto:rubenlavoscosta@gmail.com). Use the subject as: "Express Entry Scrapper"
 
