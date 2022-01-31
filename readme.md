@@ -15,7 +15,7 @@
 
 
 ---
-# <center> ❓ About This Project </center>
+# <center> About This Project </center>
 A simple understanding of this project:
 <br />
 I was looking for a way to extract data from a particular [page](https://www.canada.ca/en/immigration-refugees-citizenship/corporate/mandate/policies-operational-instructions-agreements/ministerial-instructions/express-entry-rounds.html#wb-auto-4), Canada's 🍁 Express Entry Draws.
@@ -25,13 +25,13 @@ So I came up with this solution **A simple WebScrapper**, which allow us to:
 - Export data to a .txt file as well as CSV file or Excel
 - Save time, retrieving data from the website
 
-# <center> ⚒️ Project Status </center>
+# <center> Project Status </center>
 Todo: <br />
 
     Add Docker and Start the Chromium window as Headless
 
 
-# <center> 📜 How to Set Up this utility </center>
+# <center> How to Set Up this utility </center>
 1. Head up to settings.json, this should be the output of the file
 ```json
 {
@@ -56,7 +56,7 @@ $ npm start   # This starts the scrapper
 - [Puppetteer](https://github.com/puppeteer/puppeteer)
 - [Docker](https://www.docker.com/) [Coming soon in the next versions]
 
-# <center> 🆘 Help! </center>
+# <center> Help </center>
 
 If you need any help send me an [email](mailto:rubenlavoscosta@gmail.com). Use the subject as: "Express Entry Scrapper"
 
