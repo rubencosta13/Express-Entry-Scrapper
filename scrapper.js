@@ -1,8 +1,12 @@
 import puppeteer from "puppeteer";
 import fs from "fs";
-import JSZip from "jszip";
-const url =
-  "https://www.canada.ca/en/immigration-refugees-citizenship/corporate/mandate/policies-operational-instructions-agreements/ministerial-instructions/express-entry-rounds.html#wb-auto-4";
+import moment from "moment"
+const url ="https://www.canada.ca/en/immigration-refugees-citizenship/corporate/mandate/policies-operational-instructions-agreements/ministerial-instructions/express-entry-rounds.html#wb-auto-4";
+import {writeDataToFile} from './modules/excel.js'
+const dataArray = []
+const dateArray = []
+
+
 
 const accessScore = async (page) => {
   let dateObj = new Date();
@@ -11,15 +15,9 @@ const accessScore = async (page) => {
   let year = dateObj.getUTCFullYear();
   let time = dateObj.getHours() + "-" + dateObj.getMinutes()
   let newdate = year + "-" + month + "-" + day;
-
-  let dataHandler = await page.$x(
-    "/html/body/main/div[3]/div/div/div[1]/div[2]/text()"
-  );
-
-  
+  let dataHandler = await page.$x("/html/body/main/div[3]/div/div/div[1]/div[2]/text()")
   const entries = await page.evaluate((el) => el.textContent, dataHandler[0]);
   const iteractions = parseInt(entries.split(" ").reverse().splice(1, 1));
-  console.log(iteractions);
   for (let i = 1; i < 9; i++) {
     for (let j = 1; j <= 25; j++) {
       let elHandle = await page.$x(`/html/body/main/div[3]/div/div/table/tbody/tr[${j}]/td[5]`)
@@ -30,14 +28,13 @@ const accessScore = async (page) => {
       if(!dateHandle) return
       let date = await page.evaluate((el) => el.textContent, dateHandle[0]);
       if(!date) return
-      //TODO Iterate through the pages if there is no more scores to be displayed
-      //TODO Filter the results by the emigration process, specifically Express Entry only
-      fs.writeFileSync(`./data/results/[${newdate}]-[${time}]-CRS-SCORES.txt`, `${date} -> ${score}\n`, { encoding: "utf8", flag: "a+", mode: 0o666 });
+      dataArray.push(parseInt(score))
+      const auxiliaryDate = moment(date).format("YYYY-MM-DD")
+      moment(auxiliaryDate).format('YYYY-MM-DD')
+      dateArray.push(auxiliaryDate)
+      await fs.writeFileSync(`./data/results/[${newdate}]-[${time}]-CRS-SCORES.txt`, `${date} -> ${score}\n`, { encoding: "utf8", flag: "a", mode: 0o666 });
     }
-
-    
     await page.screenshot({ path: `./data/images/[${newdate}]-[${time}]-page-${i}.png`, fullPage: true })
-    console.log(i)
     if (i === 5){
       const txtObject = await page.$x(`/html/body/main/div[3]/div/div/div[2]/div/ol/li[7]/a`)
       await txtObject[0].click()
@@ -49,12 +46,9 @@ const accessScore = async (page) => {
     
   }
 
-  var zip = new JSZip();
-  zip.file("results.txt", "xPath.txt")
-  .then(function(content) {
-      // see FileSaver.js
-      saveAs(content, "example.zip");
-  });
+
+  writeDataToFile("results.xlsx", dateArray, dataArray)
+
 };
 
 const extractPageData = async (url) => {
