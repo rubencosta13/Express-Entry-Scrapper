@@ -1,51 +1,71 @@
 import puppeteer from "puppeteer";
 import fs from "fs";
+import JSZip from "jszip";
 const url =
   "https://www.canada.ca/en/immigration-refugees-citizenship/corporate/mandate/policies-operational-instructions-agreements/ministerial-instructions/express-entry-rounds.html#wb-auto-4";
 
 const accessScore = async (page) => {
+  let dateObj = new Date();
+  let month = dateObj.getUTCMonth() + 1; //months from 1-12
+  let day = dateObj.getUTCDate();
+  let year = dateObj.getUTCFullYear();
+  let time = dateObj.getHours() + "-" + dateObj.getMinutes()
+  let newdate = year + "-" + month + "-" + day;
+
   let dataHandler = await page.$x(
     "/html/body/main/div[3]/div/div/div[1]/div[2]/text()"
   );
+
+  
   const entries = await page.evaluate((el) => el.textContent, dataHandler[0]);
   const iteractions = parseInt(entries.split(" ").reverse().splice(1, 1));
-  for (let i = 1; i <= iteractions; i++) {
-    let elHandle = await page.$x(
-      `/html/body/main/div[3]/div/div/table/tbody/tr[${i}]/td[5]`
-    );
-    let score = await page.evaluate((el) => el.textContent, elHandle[0]);
-    let dateHandle = await page.$x(
-      `/html/body/main/div[3]/div/div/table/tbody/tr[${i}]/td[2]`
-    );
-    let date = await page.evaluate((el) => el.textContent, dateHandle[0]);
-    //TODO Iterate through the pages if there is no more scores to be displayed
-    //TODO Filter the results by the emigration process, specifically Express Entry only
-    fs.writeFileSync(`results.txt`, `${date} -> ${score}\n`, {
-      encoding: "utf8",
-      flag: "a+",
-      mode: 0o666,
-    });
-    console.log(`${date} -> ${score}`);
+  console.log(iteractions);
+  for (let i = 1; i < 9; i++) {
+    for (let j = 1; j <= 25; j++) {
+      let elHandle = await page.$x(`/html/body/main/div[3]/div/div/table/tbody/tr[${j}]/td[5]`)
+      if(!elHandle) return
+      let score = await page.evaluate((el) => el.textContent, elHandle[0]);
+      if(!score) return
+      let dateHandle = await page.$x(`/html/body/main/div[3]/div/div/table/tbody/tr[${j}]/td[2]`)
+      if(!dateHandle) return
+      let date = await page.evaluate((el) => el.textContent, dateHandle[0]);
+      if(!date) return
+      //TODO Iterate through the pages if there is no more scores to be displayed
+      //TODO Filter the results by the emigration process, specifically Express Entry only
+      fs.writeFileSync(`./data/results/[${newdate}]-[${time}]-CRS-SCORES.txt`, `${date} -> ${score}\n`, { encoding: "utf8", flag: "a+", mode: 0o666 });
+    }
+
+    
+    await page.screenshot({ path: `./data/images/[${newdate}]-[${time}]-page-${i}.png`, fullPage: true })
+    console.log(i)
+    if (i === 5){
+      const txtObject = await page.$x(`/html/body/main/div[3]/div/div/div[2]/div/ol/li[7]/a`)
+      await txtObject[0].click()
+    }else{
+      const txtObject = await page.$x(`/html/body/main/div[3]/div/div/div[2]/div/ol/li[8]/a`)
+      if (!txtObject) return
+      await txtObject[0].click()
+    }
+    
   }
+
+  var zip = new JSZip();
+  zip.file("results.txt", "xPath.txt")
+  .then(function(content) {
+      // see FileSaver.js
+      saveAs(content, "example.zip");
+  });
 };
 
 const extractPageData = async (url) => {
-  const browserConfigs = {
-    headless: true,
-    args: [
-        "--disable-gpu",
-        "--disable-dev-shm-usage",
-        "--disable-setuid-sandbox",
-        "--no-sandbox",
-    ]
-  }
-  const browser = await puppeteer.launch(browserConfigs);
-  const page = await browser.newPage();
-  await page.goto(url);
-  await accessScore(page);
-  await browser.close();
-};
-
-extractPageData(url);
-
-//scroll /html/body/main/div[2]/p[3]
+  const browserConfigs = {headless: false}
+  const browser = await puppeteer.launch(browserConfigs)
+  const page = await browser.newPage()
+  await page.setDefaultNavigationTimeout(0)
+  await page.goto(url)
+  setTimeout(async () => {
+    await accessScore(page)
+    await browser.close()
+  }, 3000)
+}
+extractPageData(url)

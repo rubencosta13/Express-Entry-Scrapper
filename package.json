@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "main": "scrapper.js",
   "type": "module",
-  "devDependencies": {},
   "scripts": {
     "start": "node scrapper.js"
   },
@@ -12,6 +11,8 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "exceljs": "^4.3.0",
+    "jszip": "^3.7.1",
     "puppeteer": "^13.1.2"
   }
 }
