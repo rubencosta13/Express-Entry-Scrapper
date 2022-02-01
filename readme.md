@@ -7,7 +7,7 @@
 </center>
 
 # Table of Contents
-- [Temporary File Cleaner](https://github.com/rubencosta13/Express-Entry-Scrapper)
+- [Express Entry CRS Scrapper](https://github.com/rubencosta13/Express-Entry-Scrapper)
     - [Project Explanation](#about-this-project)
     - [Project Status](#project-status)
     - [Configurations](#how-to-set-up-this-utility)
